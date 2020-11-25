@@ -1,0 +1,36 @@
+openapi: 3.0.2
+info:
+  title: Unique ID API
+  version: 1.0.0
+servers:
+  - url: https://collect.youreurope.ec.europa.eu/{version}
+    variables:
+      version:
+        default: v1
+paths:
+  /unique-id:
+    get:
+      summary: return a unique id
+      operationId: getUniqueId
+      security:
+        - apiKey: [ 'a' ]
+      responses:
+        200:
+          description: unique id response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/unique-id'
+
+components:
+  schemas:
+    unique-id:
+      description: Unique ID for feedback submission for a specific reference period collected.
+      type: string
+
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      description: Api key provided to the member states by the SDG management
+      name: x-api-key
+      in: header

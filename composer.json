@@ -1,0 +1,28 @@
+{
+    "name": "letharion/api-client",
+    "authors": [
+        {
+            "name": "Claes 'Letharion' Gyllensvärd",
+            "email": "letharion@gmail.com"
+        }
+    ],
+    "require": {
+        "jane-php/open-api-runtime": "~6.1.0",
+        "guzzlehttp/guzzle": "^7.2",
+        "laminas/laminas-diactoros": "^2.5"
+    },
+    "require-dev": {
+        "jane-php/open-api-3": "~6.1.0"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": "true"
+        }
+    },
+    "minimum-stability": "beta",
+    "autoload": {
+      "psr-4": {
+        "Vendor\\Library\\Generated\\": "generated/"
+      }
+    }
+}
