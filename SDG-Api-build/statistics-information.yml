@@ -1,0 +1,118 @@
+---
+openapi: 3.0.2
+info:
+  title: Statistics on Information Services
+  version: 1.0.0
+  description: Single Digital Gateway API for the Statistics on Information Services.
+  x-logo:
+    url: ""
+servers:
+  - url: https://collect.youreurope.ec.europa.eu/{version}
+    variables:
+      version:
+        default: v1
+paths:
+  /statistics/information-services:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/informationServiceStats'
+        required: true
+      security:
+        - apiKey: []
+      responses:
+        "200":
+          description: OK
+      description: Create a new dataset related to a given reference period, identified
+        by a unique key provided, or update the data if it already exists
+components:
+  schemas:
+    informationServiceStats:
+      type: object
+      required:
+        - uniqueId
+        - referencePeriod
+        - transferDate
+        - transferType
+        - nbEntries
+        - sources
+      properties:
+        uniqueId:
+          description: Unique ID for feedback submission for a specific reference period collected from the Unique ID web API call.
+          type: string
+        referencePeriod:
+          $ref: '#/components/schemas/referencePeriod'
+        transferDate:
+          description: Date Time when the web API is called. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
+          format: date-time
+          type: string
+        transferType:
+          type: string
+          enum:
+            - API
+            - Manual
+        nbEntries:
+          type: number
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/source'
+    source:
+      type: object
+      required:
+        - sourceUrl
+        - statistics
+      properties:
+        sourceUrl:
+          type: string
+        statistics:
+          $ref: '#/components/schemas/urlStatistics'
+    urlStatistics:
+      description: An object representing the statistical information for one particular
+        source URL. Array of objects because same URL can have several combination
+        of statistics depending on different values of the originating country or type
+        of device.
+      type: array
+      items:
+        type: object
+        required:
+          - nbVisits
+          - originatingCountry
+          - deviceType
+        properties:
+          nbVisits:
+            type: integer
+          originatingCountry:
+            $ref: '#/components/schemas/country'
+          deviceType:
+            type: string
+            enum:
+            - PC
+            - Tablet
+            - Smartphone
+            - Others
+    country:
+      description: Country codes as per Eurostat. See  https://ec.europa.eu/eurostat/statistics-explained/index.php/Glossary:Country_codes
+      type: string
+    referencePeriod:
+      type: object
+      required:
+        - startDate
+        - endDate
+      properties:
+        StartDate:
+          description: Start date of the reference period. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
+          format: date-time
+          type: string
+        EndDate:
+          description: End date of the reference period. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
+          format: date-time
+          type: string
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      description: Api key provided to the member states by the SDG management
+      name: x-api-key
+      in: header

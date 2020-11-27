@@ -3,8 +3,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 use GuzzleHttp\Client;
-use Vendor\Library\Generated\Authentication\ApiKeyAuthentication;
-use Vendor\Library\Generated\Client as GeneratedClient;
+use Vendor\Library\UniqueID\Authentication\ApiKeyAuthentication;
+use Vendor\Library\UniqueID\Client as GeneratedClient;
 
 class SDGClient extends GeneratedClient {
     public static function create($httpClient = null, array $additionalPlugins = array()) {

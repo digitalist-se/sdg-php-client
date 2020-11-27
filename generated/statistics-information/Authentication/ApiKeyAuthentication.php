@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\Generated\Authentication;
+namespace Vendor\Library\StatisticsInformation\Authentication;
 
 class ApiKeyAuthentication implements \Jane\OpenApiRuntime\Client\AuthenticationPlugin
 {
