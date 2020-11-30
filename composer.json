@@ -12,7 +12,8 @@
         "laminas/laminas-diactoros": "^2.5"
     },
     "require-dev": {
-        "jane-php/open-api-3": "~6.1.0"
+        "jane-php/open-api-3": "~6.1.0",
+        "phan/phan": "^3.2"
     },
     "extra": {
         "symfony": {
