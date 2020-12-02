@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\StatisticsInformation\Normalizer;
+namespace Digitalist\Library\StatisticsInformation\Normalizer;
 
 use Jane\JsonSchemaRuntime\Reference;
 use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
@@ -18,11 +18,11 @@ class UrlStatisticsItemNormalizer implements DenormalizerInterface, NormalizerIn
     use CheckArray;
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Vendor\\Library\\StatisticsInformation\\Model\\UrlStatisticsItem';
+        return $type === 'Digitalist\\Library\\StatisticsInformation\\Model\\UrlStatisticsItem';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Vendor\\Library\\StatisticsInformation\\Model\\UrlStatisticsItem';
+        return is_object($data) && get_class($data) === 'Digitalist\\Library\\StatisticsInformation\\Model\\UrlStatisticsItem';
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -32,7 +32,7 @@ class UrlStatisticsItemNormalizer implements DenormalizerInterface, NormalizerIn
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Vendor\Library\StatisticsInformation\Model\UrlStatisticsItem();
+        $object = new \Digitalist\Library\StatisticsInformation\Model\UrlStatisticsItem();
         if (\array_key_exists('nbVisits', $data)) {
             $object->setNbVisits($data['nbVisits']);
         }

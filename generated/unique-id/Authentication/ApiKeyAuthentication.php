@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\UniqueID\Authentication;
+namespace Digitalist\Library\UniqueID\Authentication;
 
 class ApiKeyAuthentication implements \Jane\OpenApiRuntime\Client\AuthenticationPlugin
 {

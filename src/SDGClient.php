@@ -1,4 +1,7 @@
 <?php
+
+namespace Digitalist;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
@@ -18,6 +21,3 @@ class SDGClient extends GeneratedClient {
         return parent::create($httpClient);
     }
 }
-
-$apiClient = SDGClient::create();
-var_dump($apiClient->getUniqueId());

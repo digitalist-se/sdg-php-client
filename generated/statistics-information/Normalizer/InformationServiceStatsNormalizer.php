@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\StatisticsInformation\Normalizer;
+namespace Digitalist\Library\StatisticsInformation\Normalizer;
 
 use Jane\JsonSchemaRuntime\Reference;
 use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
@@ -18,11 +18,11 @@ class InformationServiceStatsNormalizer implements DenormalizerInterface, Normal
     use CheckArray;
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Vendor\\Library\\StatisticsInformation\\Model\\InformationServiceStats';
+        return $type === 'Digitalist\\Library\\StatisticsInformation\\Model\\InformationServiceStats';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Vendor\\Library\\StatisticsInformation\\Model\\InformationServiceStats';
+        return is_object($data) && get_class($data) === 'Digitalist\\Library\\StatisticsInformation\\Model\\InformationServiceStats';
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -32,12 +32,12 @@ class InformationServiceStatsNormalizer implements DenormalizerInterface, Normal
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Vendor\Library\StatisticsInformation\Model\InformationServiceStats();
+        $object = new \Digitalist\Library\StatisticsInformation\Model\InformationServiceStats();
         if (\array_key_exists('uniqueId', $data)) {
             $object->setUniqueId($data['uniqueId']);
         }
         if (\array_key_exists('referencePeriod', $data)) {
-            $object->setReferencePeriod($this->denormalizer->denormalize($data['referencePeriod'], 'Vendor\\Library\\StatisticsInformation\\Model\\ReferencePeriod', 'json', $context));
+            $object->setReferencePeriod($this->denormalizer->denormalize($data['referencePeriod'], 'Digitalist\\Library\\StatisticsInformation\\Model\\ReferencePeriod', 'json', $context));
         }
         if (\array_key_exists('transferDate', $data)) {
             $object->setTransferDate(\DateTime::createFromFormat('Y-m-d\\TH:i:sP', $data['transferDate']));
@@ -51,7 +51,7 @@ class InformationServiceStatsNormalizer implements DenormalizerInterface, Normal
         if (\array_key_exists('sources', $data)) {
             $values = array();
             foreach ($data['sources'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, 'Vendor\\Library\\StatisticsInformation\\Model\\Source', 'json', $context);
+                $values[] = $this->denormalizer->denormalize($value, 'Digitalist\\Library\\StatisticsInformation\\Model\\Source', 'json', $context);
             }
             $object->setSources($values);
         }
