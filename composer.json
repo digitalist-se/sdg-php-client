@@ -24,7 +24,8 @@
     "autoload": {
       "psr-4": {
         "Vendor\\Library\\UniqueID\\": "generated/unique-id",
-        "Vendor\\Library\\StatisticsInformation\\": "generated/statistics-information"
+        "Vendor\\Library\\StatisticsInformation\\": "generated/statistics-information",
+        "Digitalist\\": "src"
       }
     }
 }

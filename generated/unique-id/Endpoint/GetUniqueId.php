@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\UniqueID\Endpoint;
+namespace Digitalist\Library\UniqueID\Endpoint;
 
 class GetUniqueId extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
