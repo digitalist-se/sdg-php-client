@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\UniqueID;
+namespace Digitalist\Library\UniqueID;
 
 class Client extends \Jane\OpenApiRuntime\Client\Client
 {
@@ -11,7 +11,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Client
      */
     public function getUniqueId(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Vendor\Library\UniqueID\Endpoint\GetUniqueId(), $fetch);
+        return $this->executeEndpoint(new \Digitalist\Library\UniqueID\Endpoint\GetUniqueId(), $fetch);
     }
     public static function create($httpClient = null, array $additionalPlugins = array())
     {
@@ -28,7 +28,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Client
         }
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
         $streamFactory = \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();
-        $serializer = new \Symfony\Component\Serializer\Serializer(array(new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer(), new \Vendor\Library\UniqueID\Normalizer\JaneObjectNormalizer()), array(new \Symfony\Component\Serializer\Encoder\JsonEncoder(new \Symfony\Component\Serializer\Encoder\JsonEncode(), new \Symfony\Component\Serializer\Encoder\JsonDecode(array('json_decode_associative' => true)))));
+        $serializer = new \Symfony\Component\Serializer\Serializer(array(new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer(), new \Digitalist\Library\UniqueID\Normalizer\JaneObjectNormalizer()), array(new \Symfony\Component\Serializer\Encoder\JsonEncoder(new \Symfony\Component\Serializer\Encoder\JsonEncode(), new \Symfony\Component\Serializer\Encoder\JsonDecode(array('json_decode_associative' => true)))));
         return new static($httpClient, $requestFactory, $serializer, $streamFactory);
     }
 }

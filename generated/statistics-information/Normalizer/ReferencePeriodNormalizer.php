@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\StatisticsInformation\Normalizer;
+namespace Digitalist\Library\StatisticsInformation\Normalizer;
 
 use Jane\JsonSchemaRuntime\Reference;
 use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
@@ -18,11 +18,11 @@ class ReferencePeriodNormalizer implements DenormalizerInterface, NormalizerInte
     use CheckArray;
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Vendor\\Library\\StatisticsInformation\\Model\\ReferencePeriod';
+        return $type === 'Digitalist\\Library\\StatisticsInformation\\Model\\ReferencePeriod';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Vendor\\Library\\StatisticsInformation\\Model\\ReferencePeriod';
+        return is_object($data) && get_class($data) === 'Digitalist\\Library\\StatisticsInformation\\Model\\ReferencePeriod';
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -32,7 +32,7 @@ class ReferencePeriodNormalizer implements DenormalizerInterface, NormalizerInte
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Vendor\Library\StatisticsInformation\Model\ReferencePeriod();
+        $object = new \Digitalist\Library\StatisticsInformation\Model\ReferencePeriod();
         if (\array_key_exists('StartDate', $data)) {
             $object->setStartDate(\DateTime::createFromFormat('Y-m-d\\TH:i:sP', $data['StartDate']));
         }

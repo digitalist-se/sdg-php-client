@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\StatisticsInformation\Model;
+namespace Digitalist\Library\StatisticsInformation\Model;
 
 class Source
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\StatisticsInformation\Normalizer;
+namespace Digitalist\Library\StatisticsInformation\Normalizer;
 
 use Jane\JsonSchemaRuntime\Reference;
 use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
@@ -18,11 +18,11 @@ class SourceNormalizer implements DenormalizerInterface, NormalizerInterface, De
     use CheckArray;
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Vendor\\Library\\StatisticsInformation\\Model\\Source';
+        return $type === 'Digitalist\\Library\\StatisticsInformation\\Model\\Source';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Vendor\\Library\\StatisticsInformation\\Model\\Source';
+        return is_object($data) && get_class($data) === 'Digitalist\\Library\\StatisticsInformation\\Model\\Source';
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -32,14 +32,14 @@ class SourceNormalizer implements DenormalizerInterface, NormalizerInterface, De
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Vendor\Library\StatisticsInformation\Model\Source();
+        $object = new \Digitalist\Library\StatisticsInformation\Model\Source();
         if (\array_key_exists('sourceUrl', $data)) {
             $object->setSourceUrl($data['sourceUrl']);
         }
         if (\array_key_exists('statistics', $data)) {
             $values = array();
             foreach ($data['statistics'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, 'Vendor\\Library\\StatisticsInformation\\Model\\UrlStatisticsItem', 'json', $context);
+                $values[] = $this->denormalizer->denormalize($value, 'Digitalist\\Library\\StatisticsInformation\\Model\\UrlStatisticsItem', 'json', $context);
             }
             $object->setStatistics($values);
         }

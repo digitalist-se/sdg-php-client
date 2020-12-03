@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Library\UniqueID\Normalizer;
+namespace Digitalist\Library\UniqueID\Normalizer;
 
 use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
