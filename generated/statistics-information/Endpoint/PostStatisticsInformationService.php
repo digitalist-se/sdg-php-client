@@ -1,15 +1,15 @@
 <?php
 
-namespace Vendor\Library\StatisticsInformation\Endpoint;
+namespace Digitalist\Library\StatisticsInformation\Endpoint;
 
 class PostStatisticsInformationService extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * Create a new dataset related to a given reference period, identified by a unique key provided, or update the data if it already exists
      *
-     * @param \Vendor\Library\StatisticsInformation\Model\InformationServiceStats $requestBody 
+     * @param \Digitalist\Library\StatisticsInformation\Model\InformationServiceStats $requestBody 
      */
-    public function __construct(\Vendor\Library\StatisticsInformation\Model\InformationServiceStats $requestBody)
+    public function __construct(\Digitalist\Library\StatisticsInformation\Model\InformationServiceStats $requestBody)
     {
         $this->body = $requestBody;
     }
@@ -24,7 +24,7 @@ class PostStatisticsInformationService extends \Jane\OpenApiRuntime\Client\BaseE
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
-        if ($this->body instanceof \Vendor\Library\StatisticsInformation\Model\InformationServiceStats) {
+        if ($this->body instanceof \Digitalist\Library\StatisticsInformation\Model\InformationServiceStats) {
             return array(array('Content-Type' => array('application/json')), $serializer->serialize($this->body, 'json'));
         }
         return array(array(), null);
