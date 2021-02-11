@@ -1,0 +1,135 @@
+---
+openapi: 3.0.2
+info:
+  title: Feedback on Quality - 1st level survey
+  description: Single Digital Gateway API for the Feedback on Quality - 1st level survey.
+  version: 1.0.0
+servers:
+  - url: https://collect.youreurope.ec.europa.eu/{version}
+    variables:
+      version:
+        default: v1
+paths:
+  /feedback/quality/batch:
+    post:
+      description: Create a new dataset related to a given reference period, identified
+        by a unique key provided, or update the data if it already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedbackBatch'
+        required: true
+      responses:
+        200:
+          description: OK
+      security:
+        - apiKey: []
+  /feedback/quality:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedback'
+        required: true
+      responses:
+        200:
+          description: OK
+      security:
+        - {}
+components:
+  schemas:
+
+    rating:
+      description: User rating from 1 (worst) to 5 (best).
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      type: integer
+
+    feedback:
+      required:
+        - category
+        - rating
+        - source
+      type: object
+      properties:
+        source:
+          type: string
+          description: Source URL for this feedback.
+        category:
+          type: string
+          enum:
+            - Information
+            - Procedure
+            - Assistance
+        rating:
+          $ref: '#/components/schemas/rating'
+        foundInformation:
+          type: string
+          enum:
+            - Yes
+            - No
+            - Partly
+        helpUsImprove:
+          type: string
+      description: User feedback on quality.
+
+    feedbackBatch:
+      required:
+        - uniqueId
+        - referencePeriod
+        - transferDate
+        - transferType
+        - nbEntries
+        - feedbacks
+      type: object
+      properties:
+        uniqueId:
+          type: string
+          description: Unique ID for feedback submission for a specific reference period collected from the Unique ID web API call.
+        referencePeriod:
+          $ref: '#/components/schemas/referencePeriod'
+        transferDate:
+          description: Date Time when the web API is called. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
+          type: string
+          format: date-time
+        transferType:
+          type: string
+          enum:
+            - API
+            - Manual
+        nbEntries:
+          type: integer
+        feedbacks:
+          type: array
+          items:
+            $ref: '#/components/schemas/feedback'
+      description: An object representing a collection of feedback on quality 1st
+        level.
+
+    referencePeriod:
+      type: object
+      required:
+        - startDate
+        - endDate
+      properties:
+        startDate:
+          description: Start date of the reference period. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
+          format: date-time
+          type: string
+        endDate:
+          description: End date of the reference period. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
+          format: date-time
+          type: string
+
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      description: Api key provided to the member states by the SDG management
+      name: x-api-key
+      in: header

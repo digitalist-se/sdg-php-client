@@ -1,0 +1,274 @@
+---
+openapi: 3.0.2
+info:
+  title: Feedback on Quality - 2nd level survey OpenAPI
+  version: 1.0.0
+  description: Single Digital Gateway API for the Feedback on Quality - 2nd level
+    survey.
+servers:
+  - url: https://collect.youreurope.ec.europa.eu/{version}
+    variables:
+      version:
+        default: v1
+paths:
+  /feedback/quality/survey/batch:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedbackBatch'
+        required: true
+      responses:
+        200:
+          description: OK
+      security:
+        - apiKey: []
+      description: Create a new dataset related to a given reference period, identified
+        by a unique key provided, or update the data if it already exists
+  /feedback/quality/survey:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedback'
+        required: true
+      responses:
+        200:
+          description: OK
+      security:
+        - {}
+components:
+  schemas:
+    rating:
+      description: User rating from 1 (worst) to 5 (best).
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      type: integer
+    yesNoUnknown:
+      description: ""
+      enum:
+        - Yes
+        - No
+        - Unknown
+      type: string
+    yesNoIrrelevant:
+      description: ""
+      enum:
+        - Yes
+        - No
+        - Irrelevant
+      type: string
+    YesNoPartlyIrrelevant:
+      description: ""
+      enum:
+        - Yes
+        - No
+        - Partly
+        - Irrelevant
+      type: string
+
+    assistanceSurvey:
+      description: User survey for detailed feedback on an assistance or problem solving service.
+
+        1. Was it made  sufficiently clear to you in advance what you could expect from  the service offered? - clearOffer
+
+        2. Did you find it easy to submit your query? - easiness
+
+        3. Was your request handled within a reasonable time? - responsiveness
+
+        4. Were you informed about any delays? - delays
+
+        5. Were you able to pay online for the service? - onlinePayment
+      required:
+        - clearOffer
+        - delays
+        - easiness
+        - onlinePayment
+        - responsiveness
+      type: object
+      properties:
+        clearOffer:
+          $ref: '#/components/schemas/rating'
+        easiness:
+          $ref: '#/components/schemas/rating'
+        responsiveness:
+          $ref: '#/components/schemas/rating'
+        delays:
+          $ref: '#/components/schemas/yesNoIrrelevant'
+        onlinePayment:
+          $ref: '#/components/schemas/yesNoIrrelevant'
+
+    procedureSurvey:
+      description: User survey for detailed feedback on cross-border accessibility of an online procedure
+
+        1. Were the instructions for completing the procedure available in English? - englishAvailability
+
+        2. Was it easy to fill in the form/submit required information? - easiness
+
+        3. Were you able to identify or authenticate yourself using your national eID or eSignature? - nationalAuthentication
+
+        4. Could you provide required evidence of compliance with applicable requirements in electronic format? - complianceEvidence
+
+        5.  Were you able to pay any fees online? - onlinePayment
+      required:
+        - complianceEvidence
+        - easiness
+        - englishAvailability
+        - nationalAuthentication
+        - onlinePayment
+      type: object
+      properties:
+        englishAvailability:
+          $ref: '#/components/schemas/yesNoUnknown'
+        easiness:
+          $ref: '#/components/schemas/rating'
+        nationalAuthentication:
+          $ref: '#/components/schemas/yesNoIrrelevant'
+        complianceEvidence:
+          $ref: '#/components/schemas/YesNoPartlyIrrelevant'
+        onlinePayment:
+          $ref: '#/components/schemas/yesNoIrrelevant'
+
+    informationSurvey:
+      description: User survey for detailed feedback on information
+
+        1. Did you find the information user-friendly (could you easily identify which parts of the information is relevant to you?) - userFriendliness
+
+        2. Was the information accurate? - accuracy
+
+        3. Was the information sufficiently comprehensive? - comprehensiveness
+
+        4. Was the language clear to you? - clarity
+
+        5. Was the information easy to find? - easyFinding
+
+        6. Was the information well-structured? - structure
+
+        7. Was the information up-to-date? - upToDate
+
+        8. Was the date of the last update (publication) indicated on the page? - lastUpdate
+
+        9. Was the name of competent authority or entity responsible for the content of the information published on the page? - ownership
+
+        10. Did the page include references, links to legal acts? - legalActs
+
+        11. Was the information available in English? - englishAvailability
+      required:
+        - accuracy
+        - clarity
+        - comprehensiveness
+        - easyFinding
+        - englishAvailability
+        - lastUpdate
+        - legalActs
+        - ownership
+        - structure
+        - upToDate
+        - userFriendliness
+      type: object
+      properties:
+        userFriendliness:
+          $ref: '#/components/schemas/rating'
+        accuracy:
+          $ref: '#/components/schemas/rating'
+        comprehensiveness:
+          $ref: '#/components/schemas/rating'
+        clarity:
+          $ref: '#/components/schemas/rating'
+        easyFinding:
+          $ref: '#/components/schemas/rating'
+        structure:
+          $ref: '#/components/schemas/rating'
+        upToDate:
+          $ref: '#/components/schemas/rating'
+        lastUpdate:
+          $ref: '#/components/schemas/yesNoUnknown'
+        ownership:
+          $ref: '#/components/schemas/yesNoUnknown'
+        legalActs:
+          $ref: '#/components/schemas/yesNoIrrelevant'
+        englishAvailability:
+          $ref: '#/components/schemas/yesNoUnknown'
+
+    referencePeriod:
+      description: ""
+      type: object
+      properties:
+        startDate:
+          description: Start date of the reference period. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
+          format: date-time
+          type: string
+        endDate:
+          description: End date of the reference period. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
+          format: date-time
+          type: string
+
+    feedbackBatch:
+      required:
+        - feedbacks
+        - nbEntries
+        - referencePeriod
+        - transferDate
+        - transferType
+        - uniqueId
+      type: object
+      properties:
+        uniqueId:
+          description: Unique ID for feedback submission for a specific reference period collected from the Unique ID web API call.
+          type: string
+        referencePeriod:
+          $ref: '#/components/schemas/referencePeriod'
+        transferDate:
+          format: date-time
+          type: string
+        transferType:
+          enum:
+            - API
+            - Manual
+          type: string
+        nbEntries:
+          type: integer
+        feedbacks:
+          type: array
+          items:
+            $ref: '#/components/schemas/feedback'
+
+    feedback:
+      description: Single user survey reply
+      required:
+        - source
+        - survey
+      type: object
+      properties:
+        source:
+          description: The URL of the webpage.
+          type: string
+        category:
+          description: Must match the survey type
+          enum:
+            - Information
+            - Procedure
+            - Assistance
+          type: string
+        survey:
+          oneOf:
+            - $ref: '#/components/schemas/informationSurvey'
+            - $ref: '#/components/schemas/assistanceSurvey'
+            - $ref: '#/components/schemas/procedureSurvey'
+          description: Detailed user surveys for detailed Feedback EITHER [1] on Information,
+            [2] OR on cross-border accessibility of an online Procedure, [3] OR on
+            an Assistance or problem solving service.
+          type: object
+
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      description: Api key provided to the member states by the SDG management
+      name: x-api-key
+      in: header
