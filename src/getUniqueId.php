@@ -11,8 +11,8 @@ class SDGClient extends GeneratedClient {
         $apiKey = getenv('SDGAPIKEY');
         $authenticationRegistry = new AuthenticationRegistry([new ApiKeyAuthentication($apiKey)]);
         $client = new Client([
-            'base_uri' => 'https://collect.sdgacceptance.eu/1.0.0/',
-//            'base_uri' => 'https://collect.youreurope.ec.europa.eu/1.0.0',
+            'base_uri' => 'https://collect.sdgacceptance.eu/v1/',
+//            'base_uri' => 'https://collect.youreurope.ec.europa.eu/v1',
         ]);
         $httpClient = new \Http\Client\Common\PluginClient($client, [$authenticationRegistry]);
         return parent::create($httpClient);

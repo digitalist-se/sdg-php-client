@@ -11,7 +11,7 @@ class GetUniqueId extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     }
     public function getUri() : string
     {
-        return '/unique-id';
+        return 'unique-id';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
