@@ -1,9 +1,9 @@
 ---
 openapi: 3.0.2
 info:
-  title: Statistics on Information Services
+  title: Statistics on Assistance Services
   version: 1.0.0
-  description: Single Digital Gateway API for the Statistics on Information Services.
+  description: Single Digital Gateway API for the Statistics on Assistance Services.
   x-logo:
     url: ""
 servers:
@@ -12,13 +12,13 @@ servers:
       version:
         default: v1
 paths:
-  /statistics/information-services:
+  /statistics/assistance-services:
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/informationServiceStats'
+              $ref: '#/components/schemas/assistanceServiceStats'
         required: true
       security:
         - apiKey: []
@@ -27,9 +27,10 @@ paths:
           description: OK
       description: Create a new dataset related to a given reference period, identified
         by a unique key provided, or update the data if it already exists
+
 components:
   schemas:
-    informationServiceStats:
+    assistanceServiceStats:
       type: object
       required:
         - uniqueId
@@ -72,30 +73,32 @@ components:
     urlStatistics:
       description: An object representing the statistical information for one particular
         source URL. Array of objects because same URL can have several combination
-        of statistics depending on different values of the originating country or type
-        of device.
+        of statistics depending on the values of the object attributes.
       type: array
       items:
         type: object
         required:
-          - nbVisits
-          - originatingCountry
-          - deviceType
+          - nbRequests
+          - categoryOfUser
+          - subjectMatter
+          - situationOfUser
+          - avgResponseTime
         properties:
-          nbVisits:
+          nbRequests:
             type: integer
-          originatingCountry:
-            $ref: '#/components/schemas/country'
-          deviceType:
+          categoryOfUser:
             type: string
-            enum:
-            - PC
-            - Tablet
-            - Smartphone
-            - Others
-    country:
-      description: Country codes, following the ISO-3166 ALPHA 2 standard, except for Greece which should be described using 'EL'
-      type: string
+            enum: ["citizen", "business"]
+          subjectMatter:
+            type: string
+          sub-subjectMatter:
+            type: string
+          situationOfUser:
+            type: string
+            enum: ["cross-border", "national"]
+          avgResponseTime:
+            description: average response time in days
+            type: integer
     referencePeriod:
       type: object
       required:
@@ -110,6 +113,7 @@ components:
           description: End date of the reference period. The format must complies with the RFC 3339 standard. E.g.:2020-12-31T23:59:59.00Z (full-dateTfull-timeZ)
           format: date-time
           type: string
+
   securitySchemes:
     apiKey:
       type: apiKey

@@ -13,7 +13,7 @@ paths:
       summary: return a unique id
       operationId: getUniqueId
       security:
-        - apiKey: [ 'a' ]
+        - apiKey: []
       responses:
         200:
           description: unique id response
