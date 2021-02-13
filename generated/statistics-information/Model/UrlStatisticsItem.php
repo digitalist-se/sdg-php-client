@@ -11,7 +11,7 @@ class UrlStatisticsItem
      */
     protected $nbVisits;
     /**
-     * Country codes as per Eurostat. See  https://ec.europa.eu/eurostat/statistics-explained/index.php/Glossary:Country_codes
+     * Country codes, following the ISO-3166 ALPHA 2 standard, except for Greece which should be described using 'EL'
      *
      * @var string
      */
@@ -44,7 +44,7 @@ class UrlStatisticsItem
         return $this;
     }
     /**
-     * Country codes as per Eurostat. See  https://ec.europa.eu/eurostat/statistics-explained/index.php/Glossary:Country_codes
+     * Country codes, following the ISO-3166 ALPHA 2 standard, except for Greece which should be described using 'EL'
      *
      * @return string
      */
@@ -53,7 +53,7 @@ class UrlStatisticsItem
         return $this->originatingCountry;
     }
     /**
-     * Country codes as per Eurostat. See  https://ec.europa.eu/eurostat/statistics-explained/index.php/Glossary:Country_codes
+     * Country codes, following the ISO-3166 ALPHA 2 standard, except for Greece which should be described using 'EL'
      *
      * @param string $originatingCountry
      *

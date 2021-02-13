@@ -33,11 +33,11 @@ class ReferencePeriodNormalizer implements DenormalizerInterface, NormalizerInte
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\StatisticsInformation\Model\ReferencePeriod();
-        if (\array_key_exists('StartDate', $data)) {
-            $object->setStartDate(\DateTime::createFromFormat('Y-m-d\\TH:i:sP', $data['StartDate']));
+        if (\array_key_exists('startDate', $data)) {
+            $object->setStartDate(\DateTime::createFromFormat('Y-m-d\\TH:i:sP', $data['startDate']));
         }
-        if (\array_key_exists('EndDate', $data)) {
-            $object->setEndDate(\DateTime::createFromFormat('Y-m-d\\TH:i:sP', $data['EndDate']));
+        if (\array_key_exists('endDate', $data)) {
+            $object->setEndDate(\DateTime::createFromFormat('Y-m-d\\TH:i:sP', $data['endDate']));
         }
         return $object;
     }
@@ -45,10 +45,10 @@ class ReferencePeriodNormalizer implements DenormalizerInterface, NormalizerInte
     {
         $data = array();
         if (null !== $object->getStartDate()) {
-            $data['StartDate'] = $object->getStartDate()->format('Y-m-d\\TH:i:sP');
+            $data['startDate'] = $object->getStartDate()->format('Y-m-d\\TH:i:sP');
         }
         if (null !== $object->getEndDate()) {
-            $data['EndDate'] = $object->getEndDate()->format('Y-m-d\\TH:i:sP');
+            $data['endDate'] = $object->getEndDate()->format('Y-m-d\\TH:i:sP');
         }
         return $data;
     }
