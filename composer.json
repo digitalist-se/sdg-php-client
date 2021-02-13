@@ -23,8 +23,8 @@
     "minimum-stability": "beta",
     "autoload": {
       "psr-4": {
-        "Vendor\\Library\\UniqueID\\": "generated/unique-id",
-        "Vendor\\Library\\StatisticsInformation\\": "generated/statistics-information",
+        "Digitalist\\Library\\UniqueID\\": "generated/unique-id",
+        "Digitalist\\Library\\StatisticsInformation\\": "generated/statistics-information",
         "Digitalist\\": "src"
       }
     }
