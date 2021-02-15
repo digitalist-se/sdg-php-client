@@ -74,8 +74,7 @@ components:
       type: string
 
     assistanceSurvey:
-      description: User survey for detailed feedback on an assistance or problem solving service.
-
+      description: "User survey for detailed feedback on an assistance or problem solving service.
         1. Was it made  sufficiently clear to you in advance what you could expect from  the service offered? - clearOffer
 
         2. Did you find it easy to submit your query? - easiness
@@ -84,7 +83,7 @@ components:
 
         4. Were you informed about any delays? - delays
 
-        5. Were you able to pay online for the service? - onlinePayment
+        5. Were you able to pay online for the service? - onlinePayment"
       required:
         - clearOffer
         - delays
@@ -105,7 +104,7 @@ components:
           $ref: '#/components/schemas/yesNoIrrelevant'
 
     procedureSurvey:
-      description: User survey for detailed feedback on cross-border accessibility of an online procedure
+      description: "User survey for detailed feedback on cross-border accessibility of an online procedure
 
         1. Were the instructions for completing the procedure available in English? - englishAvailability
 
@@ -115,7 +114,7 @@ components:
 
         4. Could you provide required evidence of compliance with applicable requirements in electronic format? - complianceEvidence
 
-        5.  Were you able to pay any fees online? - onlinePayment
+        5.  Were you able to pay any fees online? - onlinePayment"
       required:
         - complianceEvidence
         - easiness
@@ -136,7 +135,7 @@ components:
           $ref: '#/components/schemas/yesNoIrrelevant'
 
     informationSurvey:
-      description: User survey for detailed feedback on information
+      description: "User survey for detailed feedback on information
 
         1. Did you find the information user-friendly (could you easily identify which parts of the information is relevant to you?) - userFriendliness
 
@@ -158,7 +157,7 @@ components:
 
         10. Did the page include references, links to legal acts? - legalActs
 
-        11. Was the information available in English? - englishAvailability
+        11. Was the information available in English? - englishAvailability"
       required:
         - accuracy
         - clarity
