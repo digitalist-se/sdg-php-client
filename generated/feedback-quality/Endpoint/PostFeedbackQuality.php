@@ -20,7 +20,7 @@ class PostFeedbackQuality extends \Jane\OpenApiRuntime\Client\BaseEndpoint imple
     }
     public function getUri() : string
     {
-        return '/feedback/quality';
+        return 'feedback/quality';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {

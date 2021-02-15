@@ -20,7 +20,7 @@ class PostFeedbackQualityBatch extends \Jane\OpenApiRuntime\Client\BaseEndpoint 
     }
     public function getUri() : string
     {
-        return '/feedback/quality/batch';
+        return 'feedback/quality/batch';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
