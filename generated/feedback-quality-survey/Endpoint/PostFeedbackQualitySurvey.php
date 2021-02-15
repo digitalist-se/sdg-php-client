@@ -20,7 +20,7 @@ class PostFeedbackQualitySurvey extends \Jane\OpenApiRuntime\Client\BaseEndpoint
     }
     public function getUri() : string
     {
-        return '/feedback/quality/survey';
+        return 'feedback/quality/survey';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
