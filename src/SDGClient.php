@@ -24,7 +24,7 @@ class SDGClient {
     public static $testUrl = 'https://collect.sdgacceptance.eu/v1/';
 
     function __construct($prod = false) {
-        // Each generated endpoint really have it's own ApiKeyAuthentication but
+        // Each generated endpoint really have its own ApiKeyAuthentication but
         // since all the endpoints use it the same way, we re-use a single
         // instance here.
         // @TODO Throw on missing api key.
@@ -50,6 +50,9 @@ class SDGClient {
             $this->statisticsInformationClient = StatisticsInformationClient::create($this->httpClient);
         }
 
-        return $this->statisticsInformationClient->postStatisticsInformationService($informationStatistics);
+        return $this->statisticsInformationClient->executeEndpoint(
+            new \Digitalist\PostStatisticsInformationService($informationStatistics),
+            $this->statisticsInformationClient::FETCH_OBJECT
+        );
     }
 }

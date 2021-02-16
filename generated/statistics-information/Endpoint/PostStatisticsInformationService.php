@@ -20,7 +20,7 @@ class PostStatisticsInformationService extends \Jane\OpenApiRuntime\Client\BaseE
     }
     public function getUri() : string
     {
-        return 'statistics/information-services';
+        return '/statistics/information-services';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
