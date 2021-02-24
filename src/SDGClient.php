@@ -23,12 +23,10 @@ class SDGClient {
     public static $prodUrl = 'https://collect.youreurope.ec.europa.eu/v1/';
     public static $testUrl = 'https://collect.sdgacceptance.eu/v1/';
 
-    function __construct($prod = false) {
+    function __construct(string $apiKey, bool $prod = false) {
         // Each generated endpoint really have its own ApiKeyAuthentication but
         // since all the endpoints use it the same way, we re-use a single
         // instance here.
-        // @TODO Throw on missing api key.
-        $apiKey = getenv('SDGAPIKEY');
         $authenticationRegistry = new AuthenticationRegistry([new ApiKeyAuthentication($apiKey)]);
 
         $client = new GuzzleClient([
