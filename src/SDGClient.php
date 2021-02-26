@@ -20,7 +20,7 @@ class SDGClient {
     protected $statisticsInformationClient;
     protected $httpClient;
 
-    public static $prodUrl = 'https://collect.youreurope.ec.europa.eu/v1/';
+    public static $prodUrl = 'https://collect.youreurope.europa.eu/v1/';
     public static $testUrl = 'https://collect.sdgacceptance.eu/v1/';
 
     function __construct(string $apiKey, bool $prod = false) {
