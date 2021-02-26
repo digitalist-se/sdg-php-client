@@ -3,7 +3,7 @@ namespace Digitalist;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Digitalist\Library\StatisticsInformation\Client as StatisticsInformationClient;
+use Digitalist\StatisticsInformation\Client as StatisticsInformationClient;
 use Digitalist\Library\UniqueID\Authentication\ApiKeyAuthentication;
 use Digitalist\Library\UniqueID\Client as UniqueIdClient;
 
@@ -19,6 +19,8 @@ class SDGClient {
     protected $uniqueIDClient;
     protected $statisticsInformationClient;
     protected $httpClient;
+
+    protected $statisticsInformationEndpoint;
 
     public static $prodUrl = 'https://collect.youreurope.europa.eu/v1/';
     public static $testUrl = 'https://collect.sdgacceptance.eu/v1/';
@@ -47,10 +49,18 @@ class SDGClient {
         if (is_null($this->statisticsInformationClient)) {
             $this->statisticsInformationClient = StatisticsInformationClient::create($this->httpClient);
         }
+        $this->statisticsInformationEndpoint = new \Digitalist\PostStatisticsInformationService($informationStatistics);
 
         return $this->statisticsInformationClient->executeEndpoint(
-            new \Digitalist\PostStatisticsInformationService($informationStatistics),
+            $this->statisticsInformationEndpoint,
             $this->statisticsInformationClient::FETCH_OBJECT
         );
+    }
+
+    /**
+     * @TODO Do we need to protect against calling this before posting?
+     */
+    public function getStatisticsInformationServiceBody() {
+        return $this->statisticsInformationClient->getBody($this->statisticsInformationEndpoint);
     }
 }

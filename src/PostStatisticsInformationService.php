@@ -11,6 +11,9 @@ class PostStatisticsInformationService extends Service {
         return substr(parent::getUri(), 1);
     }
 
+    /*
+     * The generated code doesn't return anything helpful, so we override this method.
+     */
     protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         return [
