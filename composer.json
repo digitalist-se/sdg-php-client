@@ -4,7 +4,7 @@
     "description": "Connect to SDG API",
     "keywords": ["SDG","SingleDigitalGateway","Matomo"],
     "homepage": "https://github.com/digitalist-se/sdg-php-client",
-    "license": "GNU GENERAL PUBLIC LICENSE Version 3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Claes 'Letharion' Gyllensvärd",
