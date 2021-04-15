@@ -1,9 +1,21 @@
 {
-    "name": "letharion/api-client",
+    "name": "digitalist/sdg-php-client",
+    "type": "library",
+    "description": "Connect to SDG API",
+    "keywords": ["SDG","SingleDigitalGateway","Matomo"],
+    "homepage": "https://github.com/digitalist-se/sdg-php-client",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Claes 'Letharion' Gyllensvärd",
-            "email": "letharion@gmail.com"
+            "email": "claes.gyllensvard@digitalistgroup.com",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Jorge Powers",
+            "email": "jorge.powers@digitalistgroup.com",
+            "homepage": "https://www.digitalist.se/medarbetare/jorge-powers",
+            "role": "Product Lead"
         }
     ],
     "require": {
