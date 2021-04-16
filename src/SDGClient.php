@@ -1,8 +1,6 @@
 <?php
 namespace Digitalist;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 use Digitalist\StatisticsInformation\Client as StatisticsInformationClient;
 use Digitalist\Library\UniqueID\Authentication\ApiKeyAuthentication;
 use Digitalist\Library\UniqueID\Client as UniqueIdClient;
