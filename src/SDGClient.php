@@ -7,7 +7,8 @@ use Digitalist\Library\UniqueID\Client as UniqueIdClient;
 
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Client\Common\PluginClient;
-use Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+
+use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 
 /**
  * Facade for all the generated SDG endpoints, exposing a single interface to

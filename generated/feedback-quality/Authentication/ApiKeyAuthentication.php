@@ -2,7 +2,7 @@
 
 namespace Digitalist\Library\FeedbackQuality\Authentication;
 
-class ApiKeyAuthentication implements \Jane\OpenApiRuntime\Client\AuthenticationPlugin
+class ApiKeyAuthentication implements \Jane\Component\OpenApiRuntime\Client\AuthenticationPlugin
 {
     private $apiKey;
     public function __construct(string $apiKey)

@@ -2,8 +2,8 @@
 
 namespace Digitalist\Library\FeedbackQuality\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Digitalist\Library\FeedbackQuality\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class FeedbackBatchNormalizer implements DenormalizerInterface, NormalizerInterf
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Digitalist\\Library\\FeedbackQuality\\Model\\FeedbackBatch';
@@ -24,6 +27,9 @@ class FeedbackBatchNormalizer implements DenormalizerInterface, NormalizerInterf
     {
         return is_object($data) && get_class($data) === 'Digitalist\\Library\\FeedbackQuality\\Model\\FeedbackBatch';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class FeedbackBatchNormalizer implements DenormalizerInterface, NormalizerInterf
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\FeedbackQuality\Model\FeedbackBatch();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('uniqueId', $data)) {
             $object->setUniqueId($data['uniqueId']);
         }
@@ -57,31 +66,22 @@ class FeedbackBatchNormalizer implements DenormalizerInterface, NormalizerInterf
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getUniqueId()) {
-            $data['uniqueId'] = $object->getUniqueId();
+        $data['uniqueId'] = $object->getUniqueId();
+        $data['referencePeriod'] = $this->normalizer->normalize($object->getReferencePeriod(), 'json', $context);
+        $data['transferDate'] = $object->getTransferDate()->format('Y-m-d\\TH:i:sP');
+        $data['transferType'] = $object->getTransferType();
+        $data['nbEntries'] = $object->getNbEntries();
+        $values = array();
+        foreach ($object->getFeedbacks() as $value) {
+            $values[] = $this->normalizer->normalize($value, 'json', $context);
         }
-        if (null !== $object->getReferencePeriod()) {
-            $data['referencePeriod'] = $this->normalizer->normalize($object->getReferencePeriod(), 'json', $context);
-        }
-        if (null !== $object->getTransferDate()) {
-            $data['transferDate'] = $object->getTransferDate()->format('Y-m-d\\TH:i:sP');
-        }
-        if (null !== $object->getTransferType()) {
-            $data['transferType'] = $object->getTransferType();
-        }
-        if (null !== $object->getNbEntries()) {
-            $data['nbEntries'] = $object->getNbEntries();
-        }
-        if (null !== $object->getFeedbacks()) {
-            $values = array();
-            foreach ($object->getFeedbacks() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
-            }
-            $data['feedbacks'] = $values;
-        }
+        $data['feedbacks'] = $values;
         return $data;
     }
 }

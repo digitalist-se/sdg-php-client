@@ -2,8 +2,8 @@
 
 namespace Digitalist\Library\StatisticsInformation\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Digitalist\Library\StatisticsInformation\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class UrlStatisticsItemNormalizer implements DenormalizerInterface, NormalizerIn
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Digitalist\\Library\\StatisticsInformation\\Model\\UrlStatisticsItem';
@@ -24,6 +27,9 @@ class UrlStatisticsItemNormalizer implements DenormalizerInterface, NormalizerIn
     {
         return is_object($data) && get_class($data) === 'Digitalist\\Library\\StatisticsInformation\\Model\\UrlStatisticsItem';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class UrlStatisticsItemNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\StatisticsInformation\Model\UrlStatisticsItem();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('nbVisits', $data)) {
             $object->setNbVisits($data['nbVisits']);
         }
@@ -44,18 +53,15 @@ class UrlStatisticsItemNormalizer implements DenormalizerInterface, NormalizerIn
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getNbVisits()) {
-            $data['nbVisits'] = $object->getNbVisits();
-        }
-        if (null !== $object->getOriginatingCountry()) {
-            $data['originatingCountry'] = $object->getOriginatingCountry();
-        }
-        if (null !== $object->getDeviceType()) {
-            $data['deviceType'] = $object->getDeviceType();
-        }
+        $data['nbVisits'] = $object->getNbVisits();
+        $data['originatingCountry'] = $object->getOriginatingCountry();
+        $data['deviceType'] = $object->getDeviceType();
         return $data;
     }
 }
