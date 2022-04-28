@@ -19,6 +19,7 @@
         }
     ],
     "require": {
+        "php": ">=8.0",
         "jane-php/open-api-runtime": "^7.2",
         "guzzlehttp/guzzle": "^7.2",
         "laminas/laminas-diactoros": "^2.5"
