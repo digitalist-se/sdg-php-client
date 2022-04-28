@@ -2,8 +2,8 @@
 
 namespace Digitalist\Library\FeedbackQualitySurvey\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Digitalist\Library\FeedbackQualitySurvey\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class ProcedureSurveyNormalizer implements DenormalizerInterface, NormalizerInte
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\ProcedureSurvey';
@@ -24,6 +27,9 @@ class ProcedureSurveyNormalizer implements DenormalizerInterface, NormalizerInte
     {
         return is_object($data) && get_class($data) === 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\ProcedureSurvey';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class ProcedureSurveyNormalizer implements DenormalizerInterface, NormalizerInte
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\FeedbackQualitySurvey\Model\ProcedureSurvey();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('englishAvailability', $data)) {
             $object->setEnglishAvailability($data['englishAvailability']);
         }
@@ -50,24 +59,17 @@ class ProcedureSurveyNormalizer implements DenormalizerInterface, NormalizerInte
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getEnglishAvailability()) {
-            $data['englishAvailability'] = $object->getEnglishAvailability();
-        }
-        if (null !== $object->getEasiness()) {
-            $data['easiness'] = $object->getEasiness();
-        }
-        if (null !== $object->getNationalAuthentication()) {
-            $data['nationalAuthentication'] = $object->getNationalAuthentication();
-        }
-        if (null !== $object->getComplianceEvidence()) {
-            $data['complianceEvidence'] = $object->getComplianceEvidence();
-        }
-        if (null !== $object->getOnlinePayment()) {
-            $data['onlinePayment'] = $object->getOnlinePayment();
-        }
+        $data['englishAvailability'] = $object->getEnglishAvailability();
+        $data['easiness'] = $object->getEasiness();
+        $data['nationalAuthentication'] = $object->getNationalAuthentication();
+        $data['complianceEvidence'] = $object->getComplianceEvidence();
+        $data['onlinePayment'] = $object->getOnlinePayment();
         return $data;
     }
 }
