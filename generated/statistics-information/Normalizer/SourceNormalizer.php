@@ -2,8 +2,8 @@
 
 namespace Digitalist\Library\StatisticsInformation\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Digitalist\Library\StatisticsInformation\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class SourceNormalizer implements DenormalizerInterface, NormalizerInterface, De
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Digitalist\\Library\\StatisticsInformation\\Model\\Source';
@@ -24,6 +27,9 @@ class SourceNormalizer implements DenormalizerInterface, NormalizerInterface, De
     {
         return is_object($data) && get_class($data) === 'Digitalist\\Library\\StatisticsInformation\\Model\\Source';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class SourceNormalizer implements DenormalizerInterface, NormalizerInterface, De
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\StatisticsInformation\Model\Source();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('sourceUrl', $data)) {
             $object->setSourceUrl($data['sourceUrl']);
         }
@@ -45,19 +54,18 @@ class SourceNormalizer implements DenormalizerInterface, NormalizerInterface, De
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getSourceUrl()) {
-            $data['sourceUrl'] = $object->getSourceUrl();
+        $data['sourceUrl'] = $object->getSourceUrl();
+        $values = array();
+        foreach ($object->getStatistics() as $value) {
+            $values[] = $this->normalizer->normalize($value, 'json', $context);
         }
-        if (null !== $object->getStatistics()) {
-            $values = array();
-            foreach ($object->getStatistics() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
-            }
-            $data['statistics'] = $values;
-        }
+        $data['statistics'] = $values;
         return $data;
     }
 }

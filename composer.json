@@ -19,12 +19,12 @@
         }
     ],
     "require": {
-        "jane-php/open-api-runtime": "~7.2.2",
+        "jane-php/open-api-runtime": "^7.2",
         "guzzlehttp/guzzle": "^7.2",
         "laminas/laminas-diactoros": "^2.5"
     },
     "require-dev": {
-        "jane-php/open-api-3": "~7.2.2",
+        "jane-php/open-api-3": "^7.2",
         "phan/phan": "^3.2"
     },
     "extra": {

@@ -2,7 +2,7 @@
 
 namespace Digitalist\Library\FeedbackQuality\Endpoint;
 
-class PostFeedbackQuality extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class PostFeedbackQuality extends \Digitalist\Library\FeedbackQuality\Runtime\Client\BaseEndpoint implements \Digitalist\Library\FeedbackQuality\Runtime\Client\Endpoint
 {
     /**
      * 
@@ -13,14 +13,14 @@ class PostFeedbackQuality extends \Jane\OpenApiRuntime\Client\BaseEndpoint imple
     {
         $this->body = $requestBody;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Digitalist\Library\FeedbackQuality\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
     }
     public function getUri() : string
     {
-        return 'feedback/quality';
+        return '/feedback/quality';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
