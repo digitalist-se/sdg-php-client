@@ -2,8 +2,8 @@
 
 namespace Digitalist\Library\FeedbackQuality\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Digitalist\Library\FeedbackQuality\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class FeedbackNormalizer implements DenormalizerInterface, NormalizerInterface, 
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Digitalist\\Library\\FeedbackQuality\\Model\\Feedback';
@@ -24,6 +27,9 @@ class FeedbackNormalizer implements DenormalizerInterface, NormalizerInterface, 
     {
         return is_object($data) && get_class($data) === 'Digitalist\\Library\\FeedbackQuality\\Model\\Feedback';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class FeedbackNormalizer implements DenormalizerInterface, NormalizerInterface, 
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\FeedbackQuality\Model\Feedback();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('source', $data)) {
             $object->setSource($data['source']);
         }
@@ -50,18 +59,15 @@ class FeedbackNormalizer implements DenormalizerInterface, NormalizerInterface, 
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getSource()) {
-            $data['source'] = $object->getSource();
-        }
-        if (null !== $object->getCategory()) {
-            $data['category'] = $object->getCategory();
-        }
-        if (null !== $object->getRating()) {
-            $data['rating'] = $object->getRating();
-        }
+        $data['source'] = $object->getSource();
+        $data['category'] = $object->getCategory();
+        $data['rating'] = $object->getRating();
         if (null !== $object->getFoundInformation()) {
             $data['foundInformation'] = $object->getFoundInformation();
         }
