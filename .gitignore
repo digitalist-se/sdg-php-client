@@ -2,3 +2,4 @@ vendor
 *.sw*
 .idea
 .vscode
+.env
