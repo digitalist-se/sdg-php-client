@@ -2,7 +2,7 @@
 
 namespace Digitalist\Library\StatisticsInformation\Runtime\Client;
 
-use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+use Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
