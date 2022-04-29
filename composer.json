@@ -21,7 +21,7 @@
     "require": {
         "php": ">=8.0",
         "jane-php/open-api-runtime": "^7.2.2",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^2.2.1",
         "laminas/laminas-diactoros": "^2.5"
     },
     "require-dev": {
