@@ -47,7 +47,8 @@ class InformationServiceStats
      */
     public function getUniqueId() : string
     {
-        return $this->uniqueId;
+        $uniqueId = $this->uniqueId;
+        return is_null($uniqueId)?"":$uniqueId;
     }
     /**
      * Unique ID for feedback submission for a specific reference period collected from the Unique ID web API call.
