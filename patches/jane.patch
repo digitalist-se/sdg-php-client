@@ -1,0 +1,79 @@
+diff --git a/generated/feedback-quality-survey/Runtime/Client/Client.php b/generated/feedback-quality-survey/Runtime/Client/Client.php
+index 41b764c..dfb38ff 100644
+--- a/generated/feedback-quality-survey/Runtime/Client/Client.php
++++ b/generated/feedback-quality-survey/Runtime/Client/Client.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Digitalist\Library\FeedbackQualitySurvey\Runtime\Client;
+ 
+-use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
++use Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+ use Psr\Http\Client\ClientInterface;
+ use Psr\Http\Message\RequestFactoryInterface;
+ use Psr\Http\Message\StreamFactoryInterface;
+diff --git a/generated/feedback-quality/Runtime/Client/Client.php b/generated/feedback-quality/Runtime/Client/Client.php
+index b26bb02..6ba2ec4 100644
+--- a/generated/feedback-quality/Runtime/Client/Client.php
++++ b/generated/feedback-quality/Runtime/Client/Client.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Digitalist\Library\FeedbackQuality\Runtime\Client;
+ 
+-use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
++use Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+ use Psr\Http\Client\ClientInterface;
+ use Psr\Http\Message\RequestFactoryInterface;
+ use Psr\Http\Message\StreamFactoryInterface;
+diff --git a/generated/statistics-information/Model/InformationServiceStats.php b/generated/statistics-information/Model/InformationServiceStats.php
+index 66c9079..d72091a 100644
+--- a/generated/statistics-information/Model/InformationServiceStats.php
++++ b/generated/statistics-information/Model/InformationServiceStats.php
+@@ -47,7 +47,8 @@ class InformationServiceStats
+      */
+     public function getUniqueId() : string
+     {
+-        return $this->uniqueId;
++        $uniqueId = $this->uniqueId;
++        return is_null($uniqueId)?"":$uniqueId;
+     }
+     /**
+      * Unique ID for feedback submission for a specific reference period collected from the Unique ID web API call.
+diff --git a/generated/statistics-information/Runtime/Client/Client.php b/generated/statistics-information/Runtime/Client/Client.php
+index 4105582..8b702e3 100644
+--- a/generated/statistics-information/Runtime/Client/Client.php
++++ b/generated/statistics-information/Runtime/Client/Client.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Digitalist\Library\StatisticsInformation\Runtime\Client;
+ 
+-use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
++use Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+ use Psr\Http\Client\ClientInterface;
+ use Psr\Http\Message\RequestFactoryInterface;
+ use Psr\Http\Message\StreamFactoryInterface;
+diff --git a/generated/unique-id/Authentication/ApiKeyAuthentication.php b/generated/unique-id/Authentication/ApiKeyAuthentication.php
+index 2ec0720..005a1b2 100644
+--- a/generated/unique-id/Authentication/ApiKeyAuthentication.php
++++ b/generated/unique-id/Authentication/ApiKeyAuthentication.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Digitalist\Library\UniqueID\Authentication;
+ 
+-class ApiKeyAuthentication implements \Jane\Component\OpenApiRuntime\Client\AuthenticationPlugin
++class ApiKeyAuthentication implements \Jane\OpenApiRuntime\Client\AuthenticationPlugin
+ {
+     private $apiKey;
+     public function __construct(string $apiKey)
+diff --git a/generated/unique-id/Runtime/Client/Client.php b/generated/unique-id/Runtime/Client/Client.php
+index 537a556..8ea0a11 100644
+--- a/generated/unique-id/Runtime/Client/Client.php
++++ b/generated/unique-id/Runtime/Client/Client.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Digitalist\Library\UniqueID\Runtime\Client;
+ 
+-use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
++use Jane\Client\Plugin\AuthenticationRegistry;
+ use Psr\Http\Client\ClientInterface;
+ use Psr\Http\Message\RequestFactoryInterface;
+ use Psr\Http\Message\StreamFactoryInterface;
