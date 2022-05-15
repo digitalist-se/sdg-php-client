@@ -2,8 +2,8 @@
 
 namespace Digitalist\Library\FeedbackQualitySurvey\Normalizer;
 
-use Jane\Component\JsonSchemaRuntime\Reference;
-use Digitalist\Library\FeedbackQualitySurvey\Runtime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,9 +16,6 @@ class InformationSurveyNormalizer implements DenormalizerInterface, NormalizerIn
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
-    /**
-     * @return bool
-     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\InformationSurvey';
@@ -27,9 +24,6 @@ class InformationSurveyNormalizer implements DenormalizerInterface, NormalizerIn
     {
         return is_object($data) && get_class($data) === 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\InformationSurvey';
     }
-    /**
-     * @return mixed
-     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -39,9 +33,6 @@ class InformationSurveyNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\FeedbackQualitySurvey\Model\InformationSurvey();
-        if (null === $data || false === \is_array($data)) {
-            return $object;
-        }
         if (\array_key_exists('userFriendliness', $data)) {
             $object->setUserFriendliness($data['userFriendliness']);
         }
@@ -77,23 +68,42 @@ class InformationSurveyNormalizer implements DenormalizerInterface, NormalizerIn
         }
         return $object;
     }
-    /**
-     * @return array|string|int|float|bool|\ArrayObject|null
-     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        $data['userFriendliness'] = $object->getUserFriendliness();
-        $data['accuracy'] = $object->getAccuracy();
-        $data['comprehensiveness'] = $object->getComprehensiveness();
-        $data['clarity'] = $object->getClarity();
-        $data['easyFinding'] = $object->getEasyFinding();
-        $data['structure'] = $object->getStructure();
-        $data['upToDate'] = $object->getUpToDate();
-        $data['lastUpdate'] = $object->getLastUpdate();
-        $data['ownership'] = $object->getOwnership();
-        $data['legalActs'] = $object->getLegalActs();
-        $data['englishAvailability'] = $object->getEnglishAvailability();
+        if (null !== $object->getUserFriendliness()) {
+            $data['userFriendliness'] = $object->getUserFriendliness();
+        }
+        if (null !== $object->getAccuracy()) {
+            $data['accuracy'] = $object->getAccuracy();
+        }
+        if (null !== $object->getComprehensiveness()) {
+            $data['comprehensiveness'] = $object->getComprehensiveness();
+        }
+        if (null !== $object->getClarity()) {
+            $data['clarity'] = $object->getClarity();
+        }
+        if (null !== $object->getEasyFinding()) {
+            $data['easyFinding'] = $object->getEasyFinding();
+        }
+        if (null !== $object->getStructure()) {
+            $data['structure'] = $object->getStructure();
+        }
+        if (null !== $object->getUpToDate()) {
+            $data['upToDate'] = $object->getUpToDate();
+        }
+        if (null !== $object->getLastUpdate()) {
+            $data['lastUpdate'] = $object->getLastUpdate();
+        }
+        if (null !== $object->getOwnership()) {
+            $data['ownership'] = $object->getOwnership();
+        }
+        if (null !== $object->getLegalActs()) {
+            $data['legalActs'] = $object->getLegalActs();
+        }
+        if (null !== $object->getEnglishAvailability()) {
+            $data['englishAvailability'] = $object->getEnglishAvailability();
+        }
         return $data;
     }
 }

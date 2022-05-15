@@ -2,7 +2,7 @@
 
 namespace Digitalist\Library\FeedbackQualitySurvey\Endpoint;
 
-class PostFeedbackQualitySurvey extends \Digitalist\Library\FeedbackQualitySurvey\Runtime\Client\BaseEndpoint implements \Digitalist\Library\FeedbackQualitySurvey\Runtime\Client\Endpoint
+class PostFeedbackQualitySurvey extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * 
@@ -13,14 +13,14 @@ class PostFeedbackQualitySurvey extends \Digitalist\Library\FeedbackQualitySurve
     {
         $this->body = $requestBody;
     }
-    use \Digitalist\Library\FeedbackQualitySurvey\Runtime\Client\EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
     }
     public function getUri() : string
     {
-        return '/feedback/quality/survey';
+        return 'feedback/quality/survey';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {

@@ -2,7 +2,7 @@
 
 namespace Digitalist\Library\FeedbackQuality\Endpoint;
 
-class PostFeedbackQualityBatch extends \Digitalist\Library\FeedbackQuality\Runtime\Client\BaseEndpoint implements \Digitalist\Library\FeedbackQuality\Runtime\Client\Endpoint
+class PostFeedbackQualityBatch extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * Create a new dataset related to a given reference period, identified by a unique key provided, or update the data if it already exists
@@ -13,14 +13,14 @@ class PostFeedbackQualityBatch extends \Digitalist\Library\FeedbackQuality\Runti
     {
         $this->body = $requestBody;
     }
-    use \Digitalist\Library\FeedbackQuality\Runtime\Client\EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
     }
     public function getUri() : string
     {
-        return '/feedback/quality/batch';
+        return 'feedback/quality/batch';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
