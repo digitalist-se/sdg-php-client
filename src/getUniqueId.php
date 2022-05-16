@@ -24,7 +24,8 @@ class SDGClient extends GeneratedClient {
         $apiKey = getenv('SDGAPIKEY');
         if(empty($apiKey)){
             // error_log("No \$_ENV['SDGAPIKEY'] found, looking for dotenv.");
-            // Getn envs from file
+            // Get envs from file
+            // Gotta run from different environments to pass tests.
             $pathToHere = realpath(__DIR__);
             if(file_exists($pathToHere . '/../.env')){
                 $dotenv = $pathToHere . '/../.env';
@@ -32,6 +33,14 @@ class SDGClient extends GeneratedClient {
             }
             elseif($pathToHere . '/../../.env'){
                 $dotenv = $pathToHere . '/../../.env';
+                (new ReadEnv($dotenv))->load();
+            }
+            elseif($pathToHere . '/../../../../.env'){
+                $dotenv = $pathToHere . '/../../../../.env';
+                (new ReadEnv($dotenv))->load();
+            }
+            elseif($pathToHere . '/../../../../../.env'){
+                $dotenv = $pathToHere . '/../../../../../.env';
                 (new ReadEnv($dotenv))->load();
             }
             else{
