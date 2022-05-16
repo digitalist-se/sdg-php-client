@@ -24,27 +24,24 @@ class SDGClient extends GeneratedClient
     {
         $apiKey = \getenv('SDGAPIKEY');
         if (empty($apiKey)) {
-            // error_log("No \$_ENV['SDGAPIKEY'] found, looking for dotenv.");
-            // Get envs from file
+            // Look for dotenv.
             // Gotta run from different environments to pass tests.
             $pathToHere = \realpath(__DIR__);
-            if (\file_exists($pathToHere . '/../.env')) {
-                $dotenv = $pathToHere . '/../.env';
-                (new ReadEnv($dotenv))->load();
-            } elseif ($pathToHere . '/../../.env') {
-                $dotenv = $pathToHere . '/../../.env';
-                (new ReadEnv($dotenv))->load();
-            } elseif ($pathToHere . '/../../../../.env') {
-                $dotenv = $pathToHere . '/../../../../.env';
-                (new ReadEnv($dotenv))->load();
-            } elseif ($pathToHere . '/../../../../../.env') {
-                $dotenv = $pathToHere . '/../../../../../.env';
-                (new ReadEnv($dotenv))->load();
-            } else {
-                \error_log("No dotenv. Finnishing.");
-                return \false;
+            $checkDepth = 6;
+            $parentDir = "/";
+            for ($i = 1; $i < $checkDepth; $i++) {
+                $dotenv = $pathToHere . $parentDir . ".env";
+                if (\file_exists($dotenv)) {
+                    (new ReadEnv($dotenv))->load();
+                    $apiKey = \getenv('SDGAPIKEY');
+                    break;
+                }
+                if ($i == $checkDepth) {
+                    \error_log("No dotenv. Finnishing.");
+                    return \false;
+                }
+                $parentDir .= "../";
             }
-            $apiKey = \getenv('SDGAPIKEY');
         }
         $authenticationRegistry = new AuthenticationRegistry([new ApiKeyAuthentication($apiKey)]);
         $client = new Client(['base_uri' => 'https://collect.sdgacceptance.eu/v1/']);

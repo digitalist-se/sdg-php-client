@@ -22,37 +22,31 @@ class SDGClient extends GeneratedClient {
     public static function create($httpClient = null, array $additionalPlugins = array()) {
 
         $apiKey = getenv('SDGAPIKEY');
-        if(empty($apiKey)){
-            // error_log("No \$_ENV['SDGAPIKEY'] found, looking for dotenv.");
-            // Get envs from file
+        if (empty($apiKey)) {
+            // Look for dotenv.
             // Gotta run from different environments to pass tests.
-            $pathToHere = realpath(__DIR__);
-            if(file_exists($pathToHere . '/../.env')){
-                $dotenv = $pathToHere . '/../.env';
-                (new ReadEnv($dotenv))->load();
+            $pathToHere = \realpath(__DIR__);
+            $checkDepth = 6;
+            $parentDir = "/";
+            for($i = 1; $i < $checkDepth; $i++){
+                $dotenv = $pathToHere . $parentDir . ".env";
+                if (\file_exists($dotenv)) {
+                    (new ReadEnv($dotenv))->load();
+                    $apiKey = getenv('SDGAPIKEY');
+                    break;
+                }
+                if ($i == $checkDepth) {
+                    \error_log("No dotenv. Finnishing.");
+                    return false;
+                }
+                $parentDir .= "../";
             }
-            elseif($pathToHere . '/../../.env'){
-                $dotenv = $pathToHere . '/../../.env';
-                (new ReadEnv($dotenv))->load();
-            }
-            elseif($pathToHere . '/../../../../.env'){
-                $dotenv = $pathToHere . '/../../../../.env';
-                (new ReadEnv($dotenv))->load();
-            }
-            elseif($pathToHere . '/../../../../../.env'){
-                $dotenv = $pathToHere . '/../../../../../.env';
-                (new ReadEnv($dotenv))->load();
-            }
-            else{
-                error_log("No dotenv. Finnishing.");
-                return false;
-            }
-            $apiKey = getenv('SDGAPIKEY');
+            
         }
         $authenticationRegistry = new AuthenticationRegistry([new ApiKeyAuthentication($apiKey)]);
         $client = new Client([
             'base_uri' => 'https://collect.sdgacceptance.eu/v1/',
-//            'base_uri' => 'https://collect.youreurope.ec.europa.eu/v1',
+            // 'base_uri' => 'https://collect.youreurope.ec.europa.eu/v1',
         ]);
         $httpClient = new \Http\Client\Common\PluginClient($client, [$authenticationRegistry]);
         return parent::create($httpClient);
