@@ -1,4 +1,5 @@
 vendor
+!scoped/vendor
 *.sw*
 .idea
 .env

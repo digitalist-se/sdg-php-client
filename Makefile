@@ -14,3 +14,7 @@ feedbackquality: $(BUILDCONFDIR)/feedback-quality.yml $(BUILDCONFDIR)/janeconf-f
 
 feedbackqualitysurvey: $(BUILDCONFDIR)/feedback-quality-survey.yml $(BUILDCONFDIR)/janeconf-feedback-quality-survey.php
 	$(GENERATECMD) $(BUILDCONFDIR)/janeconf-feedback-quality-survey.php
+
+scope:
+	${HOME}/.composer/vendor/bin/php-scoper add-prefix --output-dir=scoped --force && \
+	cd scoped && composer dump-autoload
