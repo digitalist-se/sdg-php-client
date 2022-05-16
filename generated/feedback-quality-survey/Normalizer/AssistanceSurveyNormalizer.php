@@ -2,8 +2,8 @@
 
 namespace Digitalist\Library\FeedbackQualitySurvey\Normalizer;
 
-use Jane\Component\JsonSchemaRuntime\Reference;
-use Digitalist\Library\FeedbackQualitySurvey\Runtime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,9 +16,6 @@ class AssistanceSurveyNormalizer implements DenormalizerInterface, NormalizerInt
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
-    /**
-     * @return bool
-     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\AssistanceSurvey';
@@ -27,9 +24,6 @@ class AssistanceSurveyNormalizer implements DenormalizerInterface, NormalizerInt
     {
         return is_object($data) && get_class($data) === 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\AssistanceSurvey';
     }
-    /**
-     * @return mixed
-     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -39,9 +33,6 @@ class AssistanceSurveyNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\FeedbackQualitySurvey\Model\AssistanceSurvey();
-        if (null === $data || false === \is_array($data)) {
-            return $object;
-        }
         if (\array_key_exists('clearOffer', $data)) {
             $object->setClearOffer($data['clearOffer']);
         }
@@ -59,17 +50,24 @@ class AssistanceSurveyNormalizer implements DenormalizerInterface, NormalizerInt
         }
         return $object;
     }
-    /**
-     * @return array|string|int|float|bool|\ArrayObject|null
-     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        $data['clearOffer'] = $object->getClearOffer();
-        $data['easiness'] = $object->getEasiness();
-        $data['responsiveness'] = $object->getResponsiveness();
-        $data['delays'] = $object->getDelays();
-        $data['onlinePayment'] = $object->getOnlinePayment();
+        if (null !== $object->getClearOffer()) {
+            $data['clearOffer'] = $object->getClearOffer();
+        }
+        if (null !== $object->getEasiness()) {
+            $data['easiness'] = $object->getEasiness();
+        }
+        if (null !== $object->getResponsiveness()) {
+            $data['responsiveness'] = $object->getResponsiveness();
+        }
+        if (null !== $object->getDelays()) {
+            $data['delays'] = $object->getDelays();
+        }
+        if (null !== $object->getOnlinePayment()) {
+            $data['onlinePayment'] = $object->getOnlinePayment();
+        }
         return $data;
     }
 }

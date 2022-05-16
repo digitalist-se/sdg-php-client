@@ -2,8 +2,8 @@
 
 namespace Digitalist\Library\StatisticsInformation\Normalizer;
 
-use Jane\Component\JsonSchemaRuntime\Reference;
-use Digitalist\Library\StatisticsInformation\Runtime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,9 +16,6 @@ class ReferencePeriodNormalizer implements DenormalizerInterface, NormalizerInte
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
-    /**
-     * @return bool
-     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Digitalist\\Library\\StatisticsInformation\\Model\\ReferencePeriod';
@@ -27,9 +24,6 @@ class ReferencePeriodNormalizer implements DenormalizerInterface, NormalizerInte
     {
         return is_object($data) && get_class($data) === 'Digitalist\\Library\\StatisticsInformation\\Model\\ReferencePeriod';
     }
-    /**
-     * @return mixed
-     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -39,9 +33,6 @@ class ReferencePeriodNormalizer implements DenormalizerInterface, NormalizerInte
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Digitalist\Library\StatisticsInformation\Model\ReferencePeriod();
-        if (null === $data || false === \is_array($data)) {
-            return $object;
-        }
         if (\array_key_exists('startDate', $data)) {
             $object->setStartDate(\DateTime::createFromFormat('Y-m-d\\TH:i:sP', $data['startDate']));
         }
@@ -50,14 +41,15 @@ class ReferencePeriodNormalizer implements DenormalizerInterface, NormalizerInte
         }
         return $object;
     }
-    /**
-     * @return array|string|int|float|bool|\ArrayObject|null
-     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        $data['startDate'] = $object->getStartDate()->format('Y-m-d\\TH:i:sP');
-        $data['endDate'] = $object->getEndDate()->format('Y-m-d\\TH:i:sP');
+        if (null !== $object->getStartDate()) {
+            $data['startDate'] = $object->getStartDate()->format('Y-m-d\\TH:i:sP');
+        }
+        if (null !== $object->getEndDate()) {
+            $data['endDate'] = $object->getEndDate()->format('Y-m-d\\TH:i:sP');
+        }
         return $data;
     }
 }
