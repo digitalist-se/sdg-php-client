@@ -1,0 +1,5 @@
+#!/usr/bin/env php
+<?php 
+namespace SdgScoped;
+
+require_once 'src/prep.php';

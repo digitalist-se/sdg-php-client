@@ -16,17 +16,30 @@ use Digitalist\Library\UniqueID\Client as GeneratedClient;
 /**
  * Use this file for testing. Example:
  * $ php ./src/getUniqueId.php
+ * @todo: Fix logger
  */
 class SDGClient extends GeneratedClient {
     public static function create($httpClient = null, array $additionalPlugins = array()) {
 
-        // Getn envs from file
-        $pathToHere = realpath(__DIR__);
-        $dotenv = $pathToHere . '/../.env';
-        if(file_exists($dotenv)){
-            (new ReadEnv($dotenv))->load();
-        }
         $apiKey = getenv('SDGAPIKEY');
+        if(empty($apiKey)){
+            // error_log("No \$_ENV['SDGAPIKEY'] found, looking for dotenv.");
+            // Getn envs from file
+            $pathToHere = realpath(__DIR__);
+            if(file_exists($pathToHere . '/../.env')){
+                $dotenv = $pathToHere . '/../.env';
+                (new ReadEnv($dotenv))->load();
+            }
+            elseif($pathToHere . '/../../.env'){
+                $dotenv = $pathToHere . '/../../.env';
+                (new ReadEnv($dotenv))->load();
+            }
+            else{
+                error_log("No dotenv. Finnishing.");
+                return false;
+            }
+            $apiKey = getenv('SDGAPIKEY');
+        }
         $authenticationRegistry = new AuthenticationRegistry([new ApiKeyAuthentication($apiKey)]);
         $client = new Client([
             'base_uri' => 'https://collect.sdgacceptance.eu/v1/',

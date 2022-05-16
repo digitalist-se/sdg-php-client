@@ -1,0 +1,80 @@
+<?php
+
+namespace SdgScoped\Jane\JsonSchema\Generator\Normalizer;
+
+use SdgScoped\Jane\JsonSchema\Generator\Context\Context;
+use SdgScoped\Jane\JsonSchema\Generator\Naming;
+use SdgScoped\Jane\JsonSchema\Guesser\Guess\ClassGuess;
+use SdgScoped\PhpParser\Node\Arg;
+use SdgScoped\PhpParser\Node\Expr;
+use SdgScoped\PhpParser\Node\Name;
+use SdgScoped\PhpParser\Node\Param;
+use SdgScoped\PhpParser\Node\Scalar;
+use SdgScoped\PhpParser\Node\Stmt;
+trait DenormalizerGenerator
+{
+    /**
+     * The naming service.
+     *
+     * @return Naming
+     */
+    protected abstract function getNaming();
+    /**
+     * Create method to check if denormalization is supported.
+     *
+     * @param string $modelFqdn Fully Qualified name of the model class denormalized
+     *
+     * @return Stmt\ClassMethod
+     */
+    protected function createSupportsDenormalizationMethod(string $modelFqdn)
+    {
+        return new Stmt\ClassMethod('supportsDenormalization', ['type' => Stmt\Class_::MODIFIER_PUBLIC, 'params' => [new Param(new Expr\Variable('data')), new Param(new Expr\Variable('type')), new Param(new Expr\Variable('format'), new Expr\ConstFetch(new Name('null')))], 'stmts' => [new Stmt\Return_(new Expr\BinaryOp\Identical(new Expr\Variable('type'), new Scalar\String_($modelFqdn)))]]);
+    }
+    protected function createDenormalizeMethod(string $modelFqdn, Context $context, ClassGuess $classGuess) : Stmt\ClassMethod
+    {
+        $context->refreshScope();
+        $objectVariable = new Expr\Variable('object');
+        $statements = [];
+        if ($this->useReference) {
+            $statements[] = new Stmt\If_(new Expr\Isset_([new Expr\ArrayDimFetch(new Expr\Variable('data'), new Scalar\String_('$ref'))]), ['stmts' => [new Stmt\Return_(new Expr\New_(new Name('Reference'), [new Arg(new Expr\ArrayDimFetch(new Expr\Variable('data'), new Scalar\String_('$ref'))), new Arg(new Expr\ArrayDimFetch(new Expr\Variable('context'), new Scalar\String_('document-origin')))]))]]);
+            $statements[] = new Stmt\If_(new Expr\Isset_([new Expr\ArrayDimFetch(new Expr\Variable('data'), new Scalar\String_('$recursiveRef'))]), ['stmts' => [new Stmt\Return_(new Expr\New_(new Name('Reference'), [new Arg(new Expr\ArrayDimFetch(new Expr\Variable('data'), new Scalar\String_('$recursiveRef'))), new Arg(new Expr\ArrayDimFetch(new Expr\Variable('context'), new Scalar\String_('document-origin')))]))]]);
+        }
+        $statements[] = new Stmt\Expression(new Expr\Assign($objectVariable, new Expr\New_(new Name('\\' . $modelFqdn))));
+        $denormalizeMethodStatements = $this->denormalizeMethodStatements($classGuess, $context);
+        if (\count($denormalizeMethodStatements) > 0) {
+            \array_unshift($statements, ...$denormalizeMethodStatements);
+        }
+        $unset = \count($classGuess->getExtensionsType()) > 0;
+        foreach ($classGuess->getProperties() as $property) {
+            $propertyVar = new Expr\ArrayDimFetch(new Expr\Variable('data'), new Scalar\String_($property->getName()));
+            list($denormalizationStatements, $outputVar) = $property->getType()->createDenormalizationStatement($context, $propertyVar);
+            $baseCondition = new Expr\FuncCall(new Name('\\array_key_exists'), [new Arg(new Scalar\String_($property->getName())), new Arg(new Expr\Variable('data'))]);
+            $fullCondition = $baseCondition;
+            $mutatorStmt = \array_merge($denormalizationStatements, [new Stmt\Expression(new Expr\MethodCall($objectVariable, $this->getNaming()->getPrefixedMethodName('set', $property->getPhpName()), [$outputVar]))], $unset ? [new Stmt\Unset_([$propertyVar])] : []);
+            if (!$context->isStrict() || $property->isNullable()) {
+                $fullCondition = new Expr\BinaryOp\BooleanAnd($baseCondition, new Expr\BinaryOp\NotIdentical($propertyVar, new Expr\ConstFetch(new Name('null'))));
+            }
+            $statements[] = new Stmt\If_($fullCondition, ['stmts' => $mutatorStmt]);
+            if (!$context->isStrict() || $property->isNullable()) {
+                $invertCondition = new Expr\BinaryOp\BooleanAnd($baseCondition, new Expr\BinaryOp\Identical($propertyVar, new Expr\ConstFetch(new Name('null'))));
+                $statements[] = new Stmt\ElseIf_($invertCondition, [new Stmt\Expression(new Expr\MethodCall($objectVariable, $this->getNaming()->getPrefixedMethodName('set', $property->getPhpName()), [new Expr\ConstFetch(new Name('null'))]))]);
+            }
+        }
+        $patternCondition = [];
+        $loopKeyVar = new Expr\Variable($context->getUniqueVariableName('key'));
+        $loopValueVar = new Expr\Variable($context->getUniqueVariableName('value'));
+        foreach ($classGuess->getExtensionsType() as $pattern => $type) {
+            list($denormalizationStatements, $outputVar) = $type->createDenormalizationStatement($context, $loopValueVar);
+            $patternCondition[] = new Stmt\If_(new Expr\FuncCall(new Name('preg_match'), [new Arg(new Expr\ConstFetch(new Name("'/" . \str_replace('/', '\\/', $pattern) . "/'"))), new Arg(new Expr\Cast\String_($loopKeyVar))]), ['stmts' => \array_merge($denormalizationStatements, [new Stmt\Expression(new Expr\Assign(new Expr\ArrayDimFetch($objectVariable, $loopKeyVar), $outputVar))])]);
+        }
+        if (\count($patternCondition) > 0) {
+            $statements[] = new Stmt\Foreach_(new Expr\Variable('data'), $loopValueVar, ['keyVar' => $loopKeyVar, 'stmts' => $patternCondition]);
+        }
+        $statements[] = new Stmt\Return_($objectVariable);
+        return new Stmt\ClassMethod('denormalize', ['type' => Stmt\Class_::MODIFIER_PUBLIC, 'params' => [new Param(new Expr\Variable('data')), new Param(new Expr\Variable('class')), new Param(new Expr\Variable('format'), new Expr\ConstFetch(new Name('null'))), new Param(new Expr\Variable('context'), new Expr\Array_(), 'array')], 'stmts' => $statements]);
+    }
+    protected function denormalizeMethodStatements(ClassGuess $classGuess, Context $context) : array
+    {
+        return [];
+    }
+}
