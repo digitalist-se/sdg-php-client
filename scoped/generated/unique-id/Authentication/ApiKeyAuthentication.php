@@ -2,7 +2,7 @@
 
 namespace SdgScoped\Digitalist\Library\UniqueID\Authentication;
 
-class ApiKeyAuthentication implements \SdgScoped\Jane\OpenApiRuntime\Client\AuthenticationPlugin
+class ApiKeyAuthentication implements \SdgScoped\Jane\Component\OpenApiRuntime\Client\AuthenticationPlugin
 {
     private $apiKey;
     public function __construct(string $apiKey)
