@@ -2,7 +2,7 @@
 
 namespace Digitalist\Library\FeedbackQualitySurvey\Normalizer;
 
-use Digitalist\Library\FeedbackQualitySurvey\Runtime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -14,33 +14,21 @@ class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
-    protected $normalizers = array('Digitalist\\Library\\FeedbackQualitySurvey\\Model\\AssistanceSurvey' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\AssistanceSurveyNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\ProcedureSurvey' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\ProcedureSurveyNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\InformationSurvey' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\InformationSurveyNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\ReferencePeriod' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\ReferencePeriodNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\FeedbackBatch' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\FeedbackBatchNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\Feedback' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\FeedbackNormalizer', '\\Jane\\Component\\JsonSchemaRuntime\\Reference' => '\\Digitalist\\Library\\FeedbackQualitySurvey\\Runtime\\Normalizer\\ReferenceNormalizer'), $normalizersCache = array();
-    /**
-     * @return bool
-     */
+    protected $normalizers = array('Digitalist\\Library\\FeedbackQualitySurvey\\Model\\AssistanceSurvey' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\AssistanceSurveyNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\ProcedureSurvey' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\ProcedureSurveyNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\InformationSurvey' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\InformationSurveyNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\ReferencePeriod' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\ReferencePeriodNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\FeedbackBatch' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\FeedbackBatchNormalizer', 'Digitalist\\Library\\FeedbackQualitySurvey\\Model\\Feedback' => 'Digitalist\\Library\\FeedbackQualitySurvey\\Normalizer\\FeedbackNormalizer', '\\Jane\\JsonSchemaRuntime\\Reference' => '\\Jane\\JsonSchemaRuntime\\Normalizer\\ReferenceNormalizer'), $normalizersCache = array();
     public function supportsDenormalization($data, $type, $format = null)
     {
         return array_key_exists($type, $this->normalizers);
     }
-    /**
-     * @return bool
-     */
     public function supportsNormalization($data, $format = null)
     {
         return is_object($data) && array_key_exists(get_class($data), $this->normalizers);
     }
-    /**
-     * @return array|string|int|float|bool|\ArrayObject|null
-     */
     public function normalize($object, $format = null, array $context = array())
     {
         $normalizerClass = $this->normalizers[get_class($object)];
         $normalizer = $this->getNormalizer($normalizerClass);
         return $normalizer->normalize($object, $format, $context);
     }
-    /**
-     * @return mixed
-     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $denormalizerClass = $this->normalizers[$class];

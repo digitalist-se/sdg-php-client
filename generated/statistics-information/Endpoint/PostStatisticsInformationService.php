@@ -2,7 +2,7 @@
 
 namespace Digitalist\Library\StatisticsInformation\Endpoint;
 
-class PostStatisticsInformationService extends \Digitalist\Library\StatisticsInformation\Runtime\Client\BaseEndpoint implements \Digitalist\Library\StatisticsInformation\Runtime\Client\Endpoint
+class PostStatisticsInformationService extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * Create a new dataset related to a given reference period, identified by a unique key provided, or update the data if it already exists
@@ -13,7 +13,7 @@ class PostStatisticsInformationService extends \Digitalist\Library\StatisticsInf
     {
         $this->body = $requestBody;
     }
-    use \Digitalist\Library\StatisticsInformation\Runtime\Client\EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

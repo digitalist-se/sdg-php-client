@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Digitalist Sweden AB - GPL 3.0 or later
+ *
+ * @link https://digitalist.se
+ * @license https://github.com/digitalist-se/sdg-php-client/blob/main/LICENSE
+ */
 namespace Digitalist;
 
 use Digitalist\Library\StatisticsInformation\Endpoint\PostStatisticsInformationService as Service;

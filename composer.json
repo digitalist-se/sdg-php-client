@@ -18,14 +18,21 @@
             "role": "Product Lead"
         }
     ],
+    "config": {
+        "platform": {
+            "php": "7.3"
+        },
+        "prepend-autoloader": false,
+        "sort-packages": true
+    },
     "require": {
-        "php": ">=8.0",
-        "jane-php/open-api-runtime": "^7.2.2",
-        "guzzlehttp/guzzle": "^2.2.1",
+        "php": "^7.3",
+        "jane-php/open-api-runtime": "~6.1.0",
+        "guzzlehttp/guzzle": "^7.2",
         "laminas/laminas-diactoros": "^2.5"
     },
     "require-dev": {
-        "jane-php/open-api-3": "^7.2.2",
+        "jane-php/open-api-3": "~6.1.0",
         "phan/phan": "^3.2"
     },
     "extra": {

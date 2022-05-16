@@ -9,3 +9,9 @@ This project is Open Source and you may use it and change it.
 
 We are using this project to connect Matomo to SDG.
 
+## How to use
+
+Check out example file, run it like so:
+```
+$ php ./src/getUniqueId.php 
+```
