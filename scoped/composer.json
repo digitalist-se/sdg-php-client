@@ -1,0 +1,55 @@
+{
+    "name": "digitalist\/sdg-php-client",
+    "type": "library",
+    "description": "Connect to SDG API",
+    "keywords": [
+        "SDG",
+        "SingleDigitalGateway",
+        "Matomo"
+    ],
+    "homepage": "https:\/\/github.com\/digitalist-se\/sdg-php-client",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Claes 'Letharion' Gyllensv\u00e4rd",
+            "email": "claes.gyllensvard@digitalistgroup.com",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Jorge Powers",
+            "email": "jorge.powers@digitalistgroup.com",
+            "homepage": "https:\/\/www.digitalist.se\/medarbetare\/jorge-powers",
+            "role": "Product Lead"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "7.3"
+        },
+        "prepend-autoloader": false,
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.3",
+        "jane-php\/open-api-runtime": "~6.1.0",
+        "guzzlehttp\/guzzle": "^7.2",
+        "laminas\/laminas-diactoros": "^2.5"
+    },
+    "require-dev": {
+        "jane-php\/open-api-3": "~6.1.0",
+        "phan\/phan": "^3.2"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": "true"
+        }
+    },
+    "minimum-stability": "beta",
+    "autoload": {
+        "psr-4": {
+            "SdgScoped\\Digitalist\\Library\\UniqueID\\": "generated\/unique-id",
+            "SdgScoped\\Digitalist\\Library\\StatisticsInformation\\": "generated\/statistics-information",
+            "SdgScoped\\Digitalist\\": "src"
+        }
+    }
+}
