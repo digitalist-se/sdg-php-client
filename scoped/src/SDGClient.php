@@ -7,7 +7,7 @@ use SdgScoped\Digitalist\Library\UniqueID\Authentication\ApiKeyAuthentication;
 use SdgScoped\Digitalist\Library\UniqueID\Client as UniqueIdClient;
 use SdgScoped\GuzzleHttp\Client as GuzzleClient;
 use SdgScoped\Http\Client\Common\PluginClient;
-use SdgScoped\Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+use SdgScoped\Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 /**
  * Facade for all the generated SDG endpoints, exposing a single interface to
  * call any of them.
