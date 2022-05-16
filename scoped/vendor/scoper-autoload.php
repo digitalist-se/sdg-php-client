@@ -6,8 +6,8 @@ $loader = require_once __DIR__.'/autoload.php';
 
 // Exposed classes. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/docs/configuration.md#exposing-classes
-if (!class_exists('ComposerAutoloaderInit8739f06bd456e3ae97b409ffcf18d16b', false) && !interface_exists('ComposerAutoloaderInit8739f06bd456e3ae97b409ffcf18d16b', false) && !trait_exists('ComposerAutoloaderInit8739f06bd456e3ae97b409ffcf18d16b', false)) {
-    spl_autoload_call('SdgScoped\ComposerAutoloaderInit8739f06bd456e3ae97b409ffcf18d16b');
+if (!class_exists('ComposerAutoloaderInit3d34a4140ce17338ced917dc26ee4249', false) && !interface_exists('ComposerAutoloaderInit3d34a4140ce17338ced917dc26ee4249', false) && !trait_exists('ComposerAutoloaderInit3d34a4140ce17338ced917dc26ee4249', false)) {
+    spl_autoload_call('SdgScoped\ComposerAutoloaderInit3d34a4140ce17338ced917dc26ee4249');
 }
 if (!class_exists('PhanPHPLinter', false) && !interface_exists('PhanPHPLinter', false) && !trait_exists('PhanPHPLinter', false)) {
     spl_autoload_call('SdgScoped\PhanPHPLinter');
@@ -98,9 +98,9 @@ if (!function_exists('formatErrorMessage')) {
         return \SdgScoped\formatErrorMessage(...func_get_args());
     }
 }
-if (!function_exists('composerRequire8739f06bd456e3ae97b409ffcf18d16b')) {
-    function composerRequire8739f06bd456e3ae97b409ffcf18d16b() {
-        return \SdgScoped\composerRequire8739f06bd456e3ae97b409ffcf18d16b(...func_get_args());
+if (!function_exists('composerRequire3d34a4140ce17338ced917dc26ee4249')) {
+    function composerRequire3d34a4140ce17338ced917dc26ee4249() {
+        return \SdgScoped\composerRequire3d34a4140ce17338ced917dc26ee4249(...func_get_args());
     }
 }
 if (!function_exists('help')) {
