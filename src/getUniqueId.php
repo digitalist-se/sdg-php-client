@@ -1,4 +1,10 @@
 <?php
+/**
+ * Digitalist Sweden AB - GPL 3.0 or later
+ *
+ * @link https://digitalist.se
+ * @license https://github.com/digitalist-se/sdg-php-client/blob/main/LICENSE
+ */
 namespace Digitalist;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -7,7 +13,10 @@ use Jane\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 use GuzzleHttp\Client;
 use Digitalist\Library\UniqueID\Authentication\ApiKeyAuthentication;
 use Digitalist\Library\UniqueID\Client as GeneratedClient;
-
+/**
+ * Use this file for testing. Example:
+ * $ php ./src/getUniqueId.php
+ */
 class SDGClient extends GeneratedClient {
     public static function create($httpClient = null, array $additionalPlugins = array()) {
 
