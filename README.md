@@ -1,11 +1,14 @@
-# Deprecated
+# SDG - Single Digital Gateway
+
+We now have a well tested premium plugin, with support, to send data to SDG. Please contact us at matomo@digitalist.se for more information.
+
+
+## Deprecated
 
 This project has been deprecated. But you are free to use the code.
 
-We now have a well tested premium plugin, with support, to send data to SDG. Please contact us at matomo@digitalist.se.
 
-
-# SDG PHP Client
+## SDG PHP Client
 
 This project was built by Digitalist to help Swedish governmental agencies and authorities to send in their data to the single digital gateway.
 
